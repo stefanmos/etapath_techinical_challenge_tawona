@@ -10,7 +10,7 @@ export default class Login extends React.Component{
         super()
         this.state = {
             email: "tawomusash@gmail.com",
-            password: "tawo123",
+            password: "tawona123",
         }
     }
 
@@ -32,23 +32,12 @@ export default class Login extends React.Component{
 
     loginUser = async () =>
     {
-        console.log("sending login  post request");
-        axios.post('http://localhost:3000/api/v1/sessions',
+        const response = await axios.post('http://localhost:3000/api/v1/sessions',
         {
             email: this.state.email,
             password: this.state.password
-        })
-        .then(response => {
-
-            const {token} = response.data;
-            console.log(response.data);
-            return token;
-        })
-        .catch(error=>{
-            console.log(error.message);
-            console.error("error authenticating")
-            return null;
-        })
+        });
+        return {token:response.data.authentication_token}
     }
 
     render()

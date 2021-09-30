@@ -1,5 +1,5 @@
 class Api::V1::PackagesController < ApplicationController
-  before_action :authenticate_user!
+  #before_action :authenticate_user!
   before_action :set_package, only: %i[ show edit update destroy ]
 
   # GET /packages or /packages.json

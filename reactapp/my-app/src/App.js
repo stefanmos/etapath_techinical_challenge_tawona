@@ -4,10 +4,27 @@ import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import './App.css';
 
 import Login from './components/Login/Login';
-import Packages from './components/Pages/Packages'
+import Home from './components/Home/Home';
+import CreatePackage from './components/CreatePackage/CreatePackage';
+import useToken from './components/App/useToken';
+
+/*function setToken(userToken) {
+  console.log("user token is:" + JSON.stringify(userToken));
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken?.token
+}*/
 
 function App() {
-  const [token, setToken] = useState();
+
+  const {token, setToken} = useToken();
+
+  //const token = getToken();
+  console.log("stored token is: " + token);
 
   if(!token)
   {
@@ -16,8 +33,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path = "/packages">
-          <Packages/>
+        <Route path = "/home">
+          <Home/>
+        </Route>
+        <Route path = "/createPackage">
+          <CreatePackage/>
         </Route>
       </Switch>
     </Router>
