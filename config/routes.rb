@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :packages
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: "packages#index"
+  namespace :api do
+    namespace :v1 do
+      #post 'user_token' => 'user_token#create'
+      #devise_for :users
+      resources :packages
+      resources :sessions, only: [:create,:destroy]
+    end
+  end
+    # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+    #root to: "packages#index"
+    #get '/*path' => 'packages#index'
 end
