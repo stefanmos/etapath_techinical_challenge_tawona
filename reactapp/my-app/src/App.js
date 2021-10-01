@@ -7,6 +7,7 @@ import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import CreatePackage from './components/CreatePackage/CreatePackage';
 import useToken from './components/App/useToken';
+import EditPackage from './components/EditPackage/EditPackage';
 
 /*function setToken(userToken) {
   console.log("user token is:" + JSON.stringify(userToken));
@@ -22,22 +23,34 @@ function getToken() {
 function App() {
 
   const {token, setToken} = useToken();
+  const [userData, setUserData] = useState();
 
-  //const token = getToken();
   console.log("stored token is: " + token);
 
   if(!token)
   {
-    return <Login setToken = {setToken}/>
+    return <Login setToken = {setToken} setUserData = {setUserData}/>
   }
   return (
     <Router>
       <Switch>
         <Route path = "/home">
-          <Home/>
+          <Home 
+            token = {token}
+            userData = {userData}
+          />
         </Route>
         <Route path = "/createPackage">
-          <CreatePackage/>
+          <CreatePackage 
+            token = {token}
+            userData = {userData}
+          />
+        </Route>
+        <Route path = "/editPackage">
+          <EditPackage 
+            token = {token}
+            userData = {userData}
+          />
         </Route>
       </Switch>
     </Router>

@@ -26,8 +26,11 @@ export default class Login extends React.Component{
 
     handleSubmit = async e => {
         e.preventDefault();
-        const token = await this.loginUser();
-        this.props.setToken(token);
+        const {token,id,email} = await this.loginUser();
+
+        this.props.setToken({token});
+        this.props.setUserData({id,email});
+        console.log("token is: " + token);
     }
 
     loginUser = async () =>
@@ -37,7 +40,15 @@ export default class Login extends React.Component{
             email: this.state.email,
             password: this.state.password
         });
-        return {token:response.data.authentication_token}
+
+        const {id,email} = (await response).data;
+        const token = (await response).data.authentication_token;
+        
+        return {
+            token,
+            id,
+            email
+        }
     }
 
     render()

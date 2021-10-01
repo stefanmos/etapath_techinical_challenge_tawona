@@ -1,5 +1,5 @@
 class Api::V1::PackagesController < ApplicationController
-  #before_action :authenticate_user!
+  before_action :authenticate_api_v1_user!
   before_action :set_package, only: %i[ show edit update destroy ]
 
   # GET /packages or /packages.json
@@ -25,7 +25,7 @@ class Api::V1::PackagesController < ApplicationController
   def create
     @package = current_user.packages.build(package_params)
 
-    if @package
+    if @package.save
       render json: @package
     else
       render json: @package.errors
@@ -87,6 +87,17 @@ class Api::V1::PackagesController < ApplicationController
       end
 
     end
+
+    #def authenticate_api_v1_user
+    #  @user = User.find_by_email(params[:email]);
+
+    #  if @package
+    #    render json: @package
+    #  else
+    #    render json: @package.errors
+    #  end
+
+    #end
 
     # Only allow a list of trusted parameters through.
     def package_params

@@ -50,6 +50,7 @@ export default class CreatePackage extends React.Component{
     }
 
     createUserPackage = async()=> {
+
         await axios.post(
             'http://localhost:3000/api/v1/packages',
             {
@@ -59,6 +60,11 @@ export default class CreatePackage extends React.Component{
                 timeslot:this.state.timeslot,
                 date: this.state.date,
                 reference: this.state.reference
+            },
+            {
+                headers: {
+                  'Authorization': `${this.props.token}` 
+                }
             }
         )
         .then(response => {

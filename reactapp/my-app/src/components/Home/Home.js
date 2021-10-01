@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Package from './Package/Package';
 
 export default class Home extends React.Component{
 
@@ -51,9 +52,23 @@ export default class Home extends React.Component{
             </button>
         </Link>
         <div>
-          <ul>
-            
-          </ul>
+            <ul>
+                {
+                    [1,2,3,4].map((item, index)=>{
+                        return(
+                        <Package
+                            key = {index}
+                            location_name = {"mazowe"}
+                            destination_name = {"mazowe"}
+                            distance = {1000}
+                            timeslot = {"13:15"}
+                            date = {"2021-06-01"}
+                            reference = {"18787382"}
+                        />
+                        )
+                    })
+                }
+            </ul>
         </div>
       </>
     );
