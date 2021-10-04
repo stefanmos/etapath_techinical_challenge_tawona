@@ -52,6 +52,7 @@ export default class CreatePackage extends React.Component{
     }
 
     createUserPackage = async()=> {
+        console.log("is is is" + JSON.stringify(this.props.userData));
 
         await axios.post(
             'http://localhost:3000/api/v1/packages',
@@ -62,7 +63,7 @@ export default class CreatePackage extends React.Component{
                 timeslot:this.state.timeslot,
                 date: this.state.date,
                 reference_number: this.state.reference,
-                user_id: 1
+                user_id: this.props.userData.id
             },
             {
                 headers: {
