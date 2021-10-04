@@ -1,7 +1,15 @@
 class Api::V1::PackagesController < ApplicationController
-  before_action :authenticate_api_v1_user!
+  #before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
   before_action :set_package, only: %i[ show edit update destroy ]
+  #before_action :get_current_user 
+  #include Devise::Controllers::Helpers 
 
+
+  #def get_current_user
+  #  @current_user = current_api_v1_user
+  #end
+  
   # GET /packages or /packages.json
   def index
     @packages = Package.all
@@ -13,45 +21,32 @@ class Api::V1::PackagesController < ApplicationController
   end
 
   # GET /packages/new
-  #def new
-  #  @package = current_user.packages.build
-  #end
+  def new
+    @package = current_user.packages.build
+  end
 
-  # GET /packages/1/edit
-  #def edit
-  #end
+  # GET /packages/userPackages
+  def userpackages
+    @current_user = User.find(params[:user_id])
+    @packages = @current_user.packages.all
+    render json: @packages
+  end
 
   # POST /packages or /packages.json
   def create
-    @package = current_user.packages.build(package_params)
-
+    @current_user = User.find(params[:user_id])
+    @package = @current_user.packages.build(package_params)
     if @package.save
       render json: @package
     else
       render json: @package.errors
     end
-    #respond_to do |format|
-    #  if @package.save
-        #format.html { redirect_to @package, notice: "Package was successfully created." }
-    #    format.json { render :show, status: :created, location: @package }
-    #  else
-    #    format.html { render :new, status: :unprocessable_entity }
-    #    format.json { render json: @package.errors, status: :unprocessable_entity }
-    #  end
-    #end
   end
 
   # PATCH/PUT /packages/1 or /packages/1.json
   def update
-    #respond_to do |format|
-    #  if @package.update(package_params)
-    #    format.html { redirect_to @package, notice: "Package was successfully updated." }
-    #    format.json { render :show, status: :ok, location: @package }
-    #  else
-    #    format.html { render :edit, status: :unprocessable_entity }
-    #    format.json { render json: @package.errors, status: :unprocessable_entity }
-    #  end
-    #end
+    #@current_user = User.find(params[:user_id])
+    #@package = @current_user.packages.find_by(reference_number: params[:reference_number])
     if @package.update(package_params)
       render json: @package
     else
@@ -61,13 +56,7 @@ class Api::V1::PackagesController < ApplicationController
 
   # DELETE /packages/1 or /packages/1.json
   def destroy
-    #@package.destroy
-    #respond_to do |format|
-    #  format.html { redirect_to packages_url, notice: "Package was successfully destroyed." }
-    #  format.json { head :no_content }
-    #end
-
-    if @package.distroy
+    if @package.destroy
       render json: @package
     else
       render json: @package.errors
@@ -79,13 +68,6 @@ class Api::V1::PackagesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_package
       @package = Package.find(params[:id])
-
-      if @package
-        render json: @package
-      else
-        render json: @package.errors
-      end
-
     end
 
     #def authenticate_api_v1_user

@@ -9,15 +9,6 @@ export default class Package extends React.Component{
   {
     super();
   }
-
-  onEdit = () =>{
-
-  }
-
-  onDelete = () =>{
-
-  }
-
   render()
   {
     return(
@@ -61,9 +52,9 @@ export default class Package extends React.Component{
                   }
                 }
               }}>
-              <button onClick = {this.onEdit}>Edit</button>
+              <button>Edit</button>
             </Link>
-            <button onClick = {this.onDelete}>Delete</button>
+            <button onClick = {()=>this.props.onDelete(this.props.id, this.props.index)}>Delete</button>
           </div>
         </div>
       </>

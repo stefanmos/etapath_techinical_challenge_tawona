@@ -26,6 +26,8 @@ function App() {
   const [userData, setUserData] = useState();
 
   console.log("stored token is: " + token);
+  console.log("id is: " + userData);
+
 
   if(!token)
   {

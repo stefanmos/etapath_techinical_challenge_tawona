@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import './CreatePackage.css'
+import { Redirect } from 'react-router';
 
 export default class CreatePackage extends React.Component{
 
@@ -13,7 +14,8 @@ export default class CreatePackage extends React.Component{
         distance: 1000,
         timeslot: "",
         date: "",
-        reference: 1000
+        reference: 1000,
+        redirect: false
         }
     }
 
@@ -54,21 +56,30 @@ export default class CreatePackage extends React.Component{
         await axios.post(
             'http://localhost:3000/api/v1/packages',
             {
-                location_name: this.state.location_name,
-                destination_name: this.state.destination_name,
+                location: this.state.location_name,
+                destination: this.state.destination_name,
                 distance: this.state.distance,
                 timeslot:this.state.timeslot,
                 date: this.state.date,
-                reference: this.state.reference
+                reference_number: this.state.reference,
+                user_id: 1
             },
             {
                 headers: {
                   'Authorization': `${this.props.token}` 
                 }
+            },
+            {
+                params:{
+                    //user_email: this.props.userData.email,
+                    //user_token: this.props.token
+                }
+
             }
         )
         .then(response => {
-            console.log(response.data);
+            console.log(response);
+            this.setState({redirect: true});
         })
         .catch(error =>{
             console.log("error creating package");
@@ -79,6 +90,12 @@ export default class CreatePackage extends React.Component{
 
   render()
   {
+    if(this.state.redirect)
+    {
+        return(
+            <Redirect to = {"/home"}></Redirect>
+        )
+    }
     return(
       <div className = 'create-package-wrapper'>
         <h2>Create Package</h2>
