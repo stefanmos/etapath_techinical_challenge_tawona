@@ -27,11 +27,13 @@ gem 'jbuilder', '~> 2.7'
 
 # add gem cors
 gem 'rack-cors', :require => 'rack/cors'
-
+# add devise gem
 gem 'devise'
 
-#add gem authentication
+#add gem jwt auth gem
+gem 'jwt'
 
+# this gem needs to be removed, nolonger in use
 gem 'simple_token_authentication', '~>1.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

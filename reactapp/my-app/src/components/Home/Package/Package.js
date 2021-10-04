@@ -1,16 +1,14 @@
 import React from 'react';
-import axios from 'axios'
 import { Link } from 'react-router-dom';
 import './Package.css'
 
 export default class Package extends React.Component{
 
-  constructor()
-  {
-    super();
-  }
   render()
   {
+    const preFormDate = new Date(this.props.timeslot);
+    const formatedtime = `${preFormDate.getUTCHours()}:${preFormDate.getUTCMinutes()}`;
+
     return(
       <>
         <div className = "package-container">
@@ -28,7 +26,7 @@ export default class Package extends React.Component{
           </div>
           <div className = "package-entry">
             <label>Timeslot:   </label>
-            <input type = "time" disabled = {true} value = {this.props.timeslot}/>
+            <input type = "time" disabled = {true} value = {formatedtime}/>
           </div>
           <div className = "package-entry">
             <label> Date:    </label>
@@ -48,7 +46,8 @@ export default class Package extends React.Component{
                     distance: this.props.distance,
                     timeslot: this.props.timeslot,
                     date: this.props.date,
-                    reference: this.props.reference
+                    reference: this.props.reference,
+                    id: this.props.id
                   }
                 }
               }}>

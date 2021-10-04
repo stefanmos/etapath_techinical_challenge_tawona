@@ -9,8 +9,8 @@ export default class Login extends React.Component{
     {
         super()
         this.state = {
-            email: "tawomusash@gmail.com",
-            password: "tawona123",
+            email: "",
+            password: "",
         }
     }
 
@@ -26,31 +26,33 @@ export default class Login extends React.Component{
 
     handleSubmit = async e => {
         e.preventDefault();
-        const {token,id,email} = await this.loginUser();
 
-        this.props.setToken({token});
-        this.props.setUserData({id});
-        console.log("id is: " + id);
+        this.loginUser()
+        .then(res=>{
+            console.log(res);
+            const token = res.data.jwt;
+            this.props.setToken({token});
+        })
+        .catch(err => console.log(err));    
     }
 
     loginUser = async () =>
     {
-        const response = await axios.post('http://localhost:3000/api/v1/sessions',
-        {
-            email: this.state.email,
-            password: this.state.password
-        });
+        return new Promise((resolve,reject) =>{
 
-        console.log(response);
-
-        const {id,email} = (await response).data;
-        const token = (await response).data.authentication_token;
-        
-        return {
-            token,
-            id,
-            email
-        }
+            axios.post('http://localhost:3000/api/v1/sessions',
+            {
+                email: this.state.email,
+                password: this.state.password
+            })
+            .then(res=>{
+                resolve(res)
+            })
+            .catch(err=>{
+                alert("wrong user name and password");
+                reject(err);
+            })
+        })
     }
 
     render()

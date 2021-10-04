@@ -1,29 +1,28 @@
 class Api::V1::SessionsController < ApplicationController
-    #protect_from_forgery with: :null_session
-    #protect_from_forgery except: :sample
     skip_before_action :verify_authenticity_token
-    #acts_as_token_authentication_handler_for User
+
     def create
         user  = User.find_by_email(params[:email])
-        #user  = User.where(email: params[:email]).first
-
-        @current_user = user
 
         if user&.valid_password?(params[:password])
-            #sign_in(:user,user)
-            render json: user.as_json(only: [:id, :email, :authentication_token]), status: :created
+            render json: {
+                jwt: encode_token({
+                    id: user.id,
+                    email: user.email
+                })
+            }
         else
-            #render json: user.errors
             head(:unauthorized)
         end
     end
 
-
-    def savepackage
-        @current_user.packages.create(params[:user_id]);
+    private 
+    def encode_token (payload = {})
+        exp = 2.minutes.from_now
+        payload[:exp] = exp.to_i
+        JWT.encode(payload,Rails.application.secrets.secret_key_base)
     end
-    
-    
+
     def destroy
     end
 

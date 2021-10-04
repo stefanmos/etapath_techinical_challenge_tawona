@@ -1,14 +1,23 @@
 class Api::V1::PackagesController < ApplicationController
-  #before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token
+  before_action :verify_authenticity_token
   before_action :set_package, only: %i[ show edit update destroy ]
-  #before_action :get_current_user 
-  #include Devise::Controllers::Helpers 
 
 
-  #def get_current_user
-  #  @current_user = current_api_v1_user
-  #end
+  def verify_authenticity_token
+    if request.headers['Authorization'].nil? 
+      head :unauthorized
+    else
+      begin
+        token = request.headers["Authorization"]
+        decoded = JWT.decode(token,Rails.application.secrets.secret_key_base).first
+        @current_user = User.find(decoded["id"])
+      rescue #JWT:: Verification error
+        render json: {
+          loginRequired: true,
+        }
+      end
+    end    
+  end
   
   # GET /packages or /packages.json
   def index
@@ -27,7 +36,6 @@ class Api::V1::PackagesController < ApplicationController
 
   # GET /packages/userPackages
   def userpackages
-    @current_user = User.find(params[:user_id])
     @packages = @current_user.packages.all
     render json: @packages
   end
@@ -69,17 +77,6 @@ class Api::V1::PackagesController < ApplicationController
     def set_package
       @package = Package.find(params[:id])
     end
-
-    #def authenticate_api_v1_user
-    #  @user = User.find_by_email(params[:email]);
-
-    #  if @package
-    #    render json: @package
-    #  else
-    #    render json: @package.errors
-    #  end
-
-    #end
 
     # Only allow a list of trusted parameters through.
     def package_params

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+//import jwtDecode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 import Package from './Package/Package';
 
@@ -9,51 +10,67 @@ export default class Home extends React.Component{
   {
     super();
     this.state = {
-      packages:[]
+      packages:[],
     }
   }
 
-  componentDidMount()
+  componentDidMount = async () =>
   {
     // get all user's packages
     this.getPackages();
-
-    console.log("user id is" + this.props.userData);
-
   }
 
   getPackages = async()=> {
-    await axios.post('http://localhost:3000/api/v1/packages/userpackages',{
-      user_id: 1
-    })
+    await axios.post('http://localhost:3000/api/v1/packages/userpackages',{},
+    {
+      headers: {
+        'Authorization': `${this.props.token}` 
+      }
+  })
     .then(response =>{
-        console.log(response.data);
-        const packages = response.data
-        this.setState({packages});
+        if(response.data.hasOwnProperty("loginRequired"))
+        {
+            sessionStorage.clear();
+            this.props.setToken("undefined");
+        }
+        else
+        {
+          const packages = response.data
+          this.setState({packages});
+        }
+        
 
     })
     .catch(error =>{
-        console.log("error getting packages");
+      alert("cannot get your packages at this point");
         console.log(error.message);
     })
 
 
   }
 
-  goToCreatePackages()
-  {
-
-  }
-
   onDelete = async (id,index) =>
   {
-    console.log(index);
-    await axios.delete(`http://localhost:3000/api/v1/packages/${id}`)
+    await axios.delete(`http://localhost:3000/api/v1/packages/${id}`,{
+      headers: {
+        'Authorization': `${this.props.token}` 
+      }
+    })
     .then(response =>{
-      this.state.packages.splice(index,1);
-      this.setState({packages: this.state.packages});
+      if(response.data.hasOwnProperty("loginRequired"))
+      {
+        sessionStorage.clear()
+        this.props.setToken("undefined");
+      }
+      else
+      {
+        this.state.packages.splice(index,1);
+        this.setState({packages: this.state.packages});
+      }
+     
     })
     .catch(error =>{
+      alert("error deleting package, try again");
         console.log("error deleting package");
         console.log(error.message);
     })

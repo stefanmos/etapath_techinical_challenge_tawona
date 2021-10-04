@@ -1,42 +1,22 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
 import './EditPackage.css'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation,Redirect } from 'react-router-dom';
 
-export default function EditPackage ({token})
+export default function EditPackage ({token,setToken})
 {
-    const [location_name, setLocationName] = useState()
-    const [destination_name, setDestinationName] = useState();
-    const [distance, setDistance] = useState();
-    const [timeslot, setTimeslot] = useState();
-    const [date, setDate] = useState();
-    const [reference, setReference] = useState();
-
     const location = useLocation();
     const {data} = location.state;
-    //console.log(JSON.stringify(data))
+    const preFormDate = new Date(data.timeslot);
+    const formatedtime = `${preFormDate.getUTCHours()}:${preFormDate.getUTCMinutes()}`;
+    const [location_name, setLocationName] = useState(data.location_name)
+    const [destination_name, setDestinationName] = useState(data.destination_name);
+    const [distance, setDistance] = useState(data.distance);
+    const [timeslot, setTimeslot] = useState(formatedtime);
+    const [date, setDate] = useState(data.timeslot);
+    const [reference, setReference] = useState(data.reference);
+    const [redirect, setRedirect] = useState(false);
 
-
-    useEffect(()=>{
-
-        const {
-            location_name,
-            destination_name,
-            distance,
-            timeslot,
-            date,
-            reference
-        } = data;
-        setLocationName(location_name);
-        setDestinationName(destination_name);
-        setDistance(distance);
-        setTimeslot(timeslot);
-        setDate(date);
-        setReference(reference);
-    })
-
-
-    
     const locationChanged = (location_name) =>{
         setLocationName(location_name);
     }
@@ -71,8 +51,9 @@ export default function EditPackage ({token})
 
     const editUserPackage = async()=> {
 
+        console.log(data.id);
         await axios.put(
-            'http://localhost:3000/api/v1/packages',
+            `http://localhost:3000/api/v1/packages/${data.id}`,
             {
                 location_name,
                 destination_name,
@@ -88,11 +69,25 @@ export default function EditPackage ({token})
             }
         )
         .then(response => {
-            console.log(response.data);
+            //console.log(response);
+            setRedirect(true);
+            if(response.data.hasOwnProperty("loginRequired"))
+            {
+                sessionStorage.clear()
+                setToken("undefined");
+            }
+
         })
         .catch(error =>{
             console.log("error editing package");
         })
+    }
+
+    if(redirect)
+    {
+        return(
+            <Redirect to = {'./home'}/>
+        )
     }
 
     return(

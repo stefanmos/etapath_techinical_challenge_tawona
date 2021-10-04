@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios'
 import './CreatePackage.css'
 import { Redirect } from 'react-router';
+import jwtDecode from 'jwt-decode';
 
 export default class CreatePackage extends React.Component{
 
@@ -9,15 +10,24 @@ export default class CreatePackage extends React.Component{
     {
         super();
         this.state = {
-        location_name: "maseru",
-        destination_name: "mazowe",
-        distance: 1000,
+        location_name: "",
+        destination_name: "",
+        distance: 0,
         timeslot: "",
         date: "",
-        reference: 1000,
-        redirect: false
+        reference: 0,
+        redirect: false,
+        userId:""
         }
     }
+
+    componentDidMount = async () =>
+    {
+        const jwtDecoded = jwtDecode(this.props.token); 
+        const {id} = jwtDecoded;
+        await this.setState({userId:id});
+    }
+
 
     locationChanged = (location_name) =>{
         this.setState({location_name});
@@ -52,7 +62,6 @@ export default class CreatePackage extends React.Component{
     }
 
     createUserPackage = async()=> {
-        console.log("is is is" + JSON.stringify(this.props.userData));
 
         await axios.post(
             'http://localhost:3000/api/v1/packages',
@@ -63,27 +72,20 @@ export default class CreatePackage extends React.Component{
                 timeslot:this.state.timeslot,
                 date: this.state.date,
                 reference_number: this.state.reference,
-                user_id: this.props.userData.id
+                user_id: this.state.userId
             },
             {
                 headers: {
                   'Authorization': `${this.props.token}` 
                 }
-            },
-            {
-                params:{
-                    //user_email: this.props.userData.email,
-                    //user_token: this.props.token
-                }
-
             }
         )
         .then(response => {
-            console.log(response);
             this.setState({redirect: true});
         })
         .catch(error =>{
             console.log("error creating package");
+            alert(" could not create package try again");
         })
     }
 
