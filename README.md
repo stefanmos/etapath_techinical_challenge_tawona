@@ -45,3 +45,29 @@ Your task will be to convert this existing Rails application into an API and cre
 - [ ] Create the main page to show all packages, each package to have edit and delete options.
 - [ ] Setup a create package page with the ability to add new packages
 - [ ] Setup an edit package page with the ability to edit packages
+
+## ANSWER PRODUCED
+**The backend:**
+- [ ] Uses jwt token for authentication
+- [ ] Secret key used is the Rails.application.secrets.secret_key_base
+- [ ] Default hash methode for encryption was used
+- [ ] Added a sessions controller, should have been named token controller though
+- [ ] Added "api" namespace and "v1" for versioning the api end-point then defined the routes within
+- [ ] Controllers return json data
+- [ ] Authenticity is checked before every action the package controller does
+- [ ] At the moment the JWT token is set to expire after two minutes
+
+**The front-end:**
+- [ ] Added a standalone react app
+- [ ] App is in directory './reactapp/my-app'
+- [ ] To start app run command "npm start"
+- [ ] Ports may clash, react and rails (the bot want to use :3000), so just start rails first and let react take an alternate port.
+- [ ] Landing page will be "localhost:**your_react_port**/home
+- [ ] Since no registration controller was made for the api, you can create a user using rails command line.
+- [ ] You can create a package, delete a package and edit a package
+- [ ] If token expires you will be prompted to login again and will be redirected to the home page
+
+
+
+
+
