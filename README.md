@@ -66,6 +66,7 @@ Your task will be to convert this existing Rails application into an API and cre
 - [ ] Since no registration controller was made for the api, you can create a user using rails command line.
 - [ ] You can create a package, delete a package and edit a package
 - [ ] If token expires you will be prompted to login again and will be redirected to the home page
+- [ ] Also check the project flow on the github repo, there are some notes there.
 
 
 
