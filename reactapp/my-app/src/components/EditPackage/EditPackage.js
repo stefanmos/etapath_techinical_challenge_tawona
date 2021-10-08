@@ -59,12 +59,12 @@ export default function EditPackage ({token,setToken})
         await axios.put(
             `http://localhost:3000/api/v1/packages/${data.id}`,
             {
-                location_name,
-                destination_name,
+                location: location_name,
+                destination: destination_name,
                 distance,
                 timeslot,
                 date,
-                reference
+                reference_number: reference
             },
             {
                 headers: {
