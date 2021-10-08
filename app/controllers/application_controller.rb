@@ -10,13 +10,14 @@ class ApplicationController < ActionController::Base
           begin
             token = request.headers["Authorization"]
             #use rails secret_key to decode because it was used to encode
-            decoded = JWT.decode(token,Rails.application.secrets.secret_key_base).first
+            decoded = JWT.decode(token,Rails.application.secrets.secret_key_base, verify = true).first
             #if decoding succeeds now we have access the user id and we can get the current user
             @current_user = User.find(decoded["id"])
           rescue #JWT:: Verification error, either token is invalid or token expired
             # send login required flag in response
             render json: {
               loginRequired: true,
+              key: Rails.application.secrets.secret_key_base
             }
           end
         end    
