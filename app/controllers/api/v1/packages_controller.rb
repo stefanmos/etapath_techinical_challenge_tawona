@@ -19,7 +19,10 @@ class Api::V1::PackagesController < ApplicationController
 
   # GET /packages/userPackages
   def userpackages
-    @packages = @current_user.packages.all
+    # order buy date created in descending order
+    # we can also get limited entries here in the case the user has many packages then use
+    # start_from 
+    @packages = @current_user.packages.order(created_at: :desc).all
     render json: @packages
   end
 
