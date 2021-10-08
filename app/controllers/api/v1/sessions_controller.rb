@@ -26,6 +26,7 @@ class Api::V1::SessionsController < ApplicationController
 
     private 
 
+
     # function to create a token based on the user id and email
     def encode_token (payload = {})
         #set expiration date of the token
@@ -34,6 +35,8 @@ class Api::V1::SessionsController < ApplicationController
         payload[:exp] = exp.to_i
         #generate encode token
         return JWT.encode(payload,Rails.application.secrets.secret_key_base)
+
+        #JWT = Header | Payload | Verify Signature
     end
 
     # Only allow a list of trusted parameters through.

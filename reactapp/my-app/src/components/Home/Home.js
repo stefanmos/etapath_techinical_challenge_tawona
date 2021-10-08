@@ -87,9 +87,9 @@ export default class Home extends React.Component{
       }}>
         <h2 className = "home-header">Packages</h2>
         <Link to = "/createPackage">
-            <Button type="button" >
-                Create Package
-            </Button>
+          <Button type="button" >
+              Create Package
+          </Button>
         </Link>
         <div>
             <ul>

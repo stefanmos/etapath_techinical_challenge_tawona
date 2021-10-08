@@ -8,7 +8,9 @@ export default class Package extends React.Component{
   render()
   {
     const preFormDate = new Date(this.props.timeslot);
-    const formatedtime = `${preFormDate.getUTCHours()}:${preFormDate.getUTCMinutes()}`;
+    const hour = preFormDate.getUTCHours();
+    const formatedHour = (hour < 10) ? `0${hour}`: hour;
+    const formatedtime = `${formatedHour}:${preFormDate.getUTCMinutes()}`;
 
     return(
       <Container className = "package-container">

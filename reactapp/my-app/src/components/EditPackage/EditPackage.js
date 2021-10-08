@@ -8,13 +8,17 @@ export default function EditPackage ({token,setToken})
 {
     const location = useLocation();
     const {data} = location.state;
+
     const preFormDate = new Date(data.timeslot);
-    const formatedtime = `${preFormDate.getUTCHours()}:${preFormDate.getUTCMinutes()}`;
+    const hour = preFormDate.getUTCHours();
+    const formatedHour = (hour < 10) ? `0${hour}`: hour;
+
+    const formatedtime = `${formatedHour}:${preFormDate.getUTCMinutes()}`;
     const [location_name, setLocationName] = useState(data.location_name)
     const [destination_name, setDestinationName] = useState(data.destination_name);
     const [distance, setDistance] = useState(data.distance);
     const [timeslot, setTimeslot] = useState(formatedtime);
-    const [date, setDate] = useState(data.timeslot);
+    const [date, setDate] = useState(data.date);
     const [reference, setReference] = useState(data.reference);
     const [redirect, setRedirect] = useState(false);
 
@@ -52,7 +56,6 @@ export default function EditPackage ({token,setToken})
 
     const editUserPackage = async()=> {
 
-        console.log(data.id);
         await axios.put(
             `http://localhost:3000/api/v1/packages/${data.id}`,
             {
