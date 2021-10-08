@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios'
+import { Button,Container,Form,Row,Col } from "react-bootstrap";
+
 
 import './Login.css'
 
@@ -58,34 +60,35 @@ export default class Login extends React.Component{
     render()
     {
         return (
-            <div className = "login-wrapper">
-                <h1> Login to your account </h1>
-                <form onSubmit = {this.handleSubmit}>
-                    <label>
-                        <p>Email</p>
-                        <input 
-                            type="text" 
+            <Container className = "login-container">
+                <h1 className = "login-header"> Login to your account </h1>
+                <Form onSubmit = {this.handleSubmit}>
+                    <Form.Group className = "login-form-group">
+                        <Form.Label className = "login-form-label">Email:</Form.Label>
+                        <Form.Control 
+                            className = "login-form-control"
+                            type="email" 
                             onChange = {e=>this.emailChanged(e.target.value)}
                             placeholder = {"Enter email"}
                             value = {this.state.email}
                         />
-                    </label>
-                    <label>
-                        <p>Password</p>
-                        <input 
+                    </Form.Group>
+                    
+                    <Form.Group className = "login-form-group">
+                        <Form.Label className = "login-form-label">Password:</Form.Label>
+                        <Form.Control 
+                            className = "login-form-control"
                             type="password"
                             onChange = {e=>this.passwordChanged(e.target.value)} 
                             placeholder = {"Enter password"}
                             value = {this.state.password}
                         />
-                    </label>
-                    <div>
-                        <button 
+                    </Form.Group>
+                        <Button className = "mt-3"
                             type="submit"
-                        >Submit</button>
-                    </div>
-                </form>
-            </div>
+                        >Login</Button>
+                </Form>
+            </Container>
            
         )
     }

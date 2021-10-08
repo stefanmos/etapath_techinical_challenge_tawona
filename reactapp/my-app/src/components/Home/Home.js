@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-//import jwtDecode from 'jwt-decode';
+import { Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Package from './Package/Package';
+import "./Home.css"
 
 export default class Home extends React.Component{
 
@@ -80,12 +81,15 @@ export default class Home extends React.Component{
   render()
   {
     return(
-      <>
-        <h2>Packages</h2>
+      <Container style ={{
+        alignItems:"center",
+        justifyContent: "center"
+      }}>
+        <h2 className = "home-header">Packages</h2>
         <Link to = "/createPackage">
-            <button type="button">
+            <Button type="button" >
                 Create Package
-            </button>
+            </Button>
         </Link>
         <div>
             <ul>
@@ -109,7 +113,7 @@ export default class Home extends React.Component{
                 }
             </ul>
         </div>
-      </>
+      </Container>
     );
   }
 }

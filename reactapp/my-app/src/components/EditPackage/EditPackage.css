@@ -1,5 +1,29 @@
-.edit-package-wrapper {
-    display: flex;
+.edit-package-container {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.edit-package-header{
+    text-align: center;
+    padding-bottom: 10px;
+}
+.edit-package-form-group{
+margin-top: 10px;
+}
+.edit-package-form-control {
+    text-align: center;
+}
+
+.edit-package-form-label {
+    color:black;
+    font-weight: bold;
+}
+
+.form-button-save {
+    margin-top: 10px;
+}
+
+.form-button-cancel {
+    margin-top: 10px;
 }

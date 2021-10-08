@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios'
 import './EditPackage.css'
 import { Link, useLocation,Redirect } from 'react-router-dom';
+import { Container, Form, Button } from 'react-bootstrap';
 
 export default function EditPackage ({token,setToken})
 {
@@ -91,78 +92,91 @@ export default function EditPackage ({token,setToken})
     }
 
     return(
-      <div className = 'edit-package-wrapper'>
-        <h2>Edit Package</h2>
-        <form onSubmit = {handleSubmit}>
-            <label>
-                <p>Location Name</p>
-                <input 
+      <Container className = 'edit-package-container'>
+        <h2 className = "edit-package-header">Edit Package</h2>
+        <Form onSubmit = {handleSubmit}>
+            <Form.Group className = "edit-package-form-group">
+                <Form.Label className = "edit-package-form-label">Location Name</Form.Label>
+                <Form.Control 
+                    className = "edit-package-form-control"
                     type="text" 
                     onChange = {e=>locationChanged(e.target.value)}
                     placeholder = {"Enter location"}
                     value = {location_name}
                 />
-            </label>
-            <label>
-                <p>Destination Name</p>
-                <input 
+            </Form.Group>
+            <Form.Group className = "edit-package-form-group">
+                <Form.Label className = "edit-package-form-label">Destination Name</Form.Label>
+                <Form.Control 
+                    className = "edit-package-form-control"
                     type="text"
                     onChange = {e=>destinationChanged(e.target.value)} 
                     placeholder = {"Enter destination"}
                     value = {destination_name}
                 />
-            </label>
+            </Form.Group>
 
-            <label>
-                <p>Distance</p>
-                <input 
-                    type="number"
-                    onChange = {e=>distanceChanged(e.target.value)} 
-                    placeholder = {"Enter distance"}
-                    value = {distance}
-                />
-            </label>
+            {   
+                /*<Form.Group className = "edit-package-form-group">
+                    <Form.Label className = "edit-package-form-label">Distance</Form.Label>
+                    <Form.Control 
+                        className = "edit-package-form-control"
+                        type="number"
+                        onChange = {e=>distanceChanged(e.target.value)} 
+                        placeholder = {"Enter distance"}
+                        value = {distance}
+                    />
+                </Form.Group>*/
+            }
 
-            <label>
-                <p>Timeslot</p>
-                <input 
+
+            <Form.Group className = "edit-package-form-group">
+                <Form.Label className = "edit-package-form-label">Timeslot</Form.Label>
+                <Form.Control 
+                    className = "edit-package-form-control"
                     type="time"
                     onChange = {e=>timeChanged(e.target.value)} 
                     //placeholder = {"Enter time"}
                     value = {timeslot}
                 />
-            </label>
+            </Form.Group>
 
-            <label>
-                <p>Date</p>
-                <input 
+            <Form.Group className = "edit-package-form-group">
+                <Form.Label className = "edit-package-form-label">Date</Form.Label>
+                <Form.Control 
+                    className = "edit-package-form-control"
                     type="date"
                     onChange = {e=>dateChanged(e.target.value)} 
                     placeholder = {"Enter date"}
                     value = {date}
                 />
-            </label>
+            </Form.Group>
 
-            <label>
-                <p>Reference Number</p>
-                <input 
+            <Form.Group className = "edit-package-form-group">
+                <Form.Label className = "edit-package-form-label">Reference Number</Form.Label>
+                <Form.Control 
+                    className = "edit-package-form-control"
                     type="number"
                     onChange = {e=>referenceChanged(e.target.value)} 
                     placeholder = {"Enter Reference"}
                     value = {reference}
                 />
-            </label>
+            </Form.Group>
             <div>
-                <button 
+                <Button 
+                    className = "form-button-save"
                     type="submit"
-                >Save Package</button>
+                >Save Package</Button>
             </div>
             <div>
                 <Link to = "./home">
-                    <button>Cancel</button>
+                    <Button 
+                        className = "form-button-cancel"
+                        variant = "secondary"
+                    >Cancel</Button>
                 </Link>
             </div>
-        </form>
-      </div>
+        </Form>
+      </Container>
     );
 }

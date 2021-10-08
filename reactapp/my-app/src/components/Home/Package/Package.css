@@ -1,29 +1,27 @@
-.package-container{
-    flex-direction:column;
-    align-items: center;
-    border-radius: 10px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: black;
-    margin: 10px;
-    padding: 10px;
-    /*background-color: blue;*/
-}
-
-.package-entry{
-    flex-direction:row;
-    align-items:center;
-    justify-content:flex-start;
-}
-
-.package-label{
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-}
-
 .package-button-container{
     flex-direction:row;
     align-items:center;
     justify-content:space-between;
+    margin-top: 10px;
+}
+
+.package-container{
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.package-button{
+    margin-right: 10px;
+}
+.package-form-label{
+    color:black;
+    font-weight: bold;
+}
+.package-form-control {
+    /*text-align:center;*/
 }

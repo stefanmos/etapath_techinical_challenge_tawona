@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container, Form, Row,Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Package.css'
 
@@ -10,32 +11,69 @@ export default class Package extends React.Component{
     const formatedtime = `${preFormDate.getUTCHours()}:${preFormDate.getUTCMinutes()}`;
 
     return(
-      <>
-        <div className = "package-container">
-          <div className = "package-entry">
-            <label className = "package-label">Location Name:    </label>
-            <input type = "text" disabled = {true} value = {this.props.location_name}/>
-          </div>
-          <div className = "package-entry">
-            <label>Destination Name:    </label>
-            <input type = "text" disabled = {true} value = {this.props.destination_name}/>
-          </div>
-          <div className = "package-entry">
-            <label> Distance:    </label>
-            <input type = "text" disabled = {true} value = {this.props.distance}/>
-          </div>
-          <div className = "package-entry">
-            <label>Timeslot:   </label>
-            <input type = "time" disabled = {true} value = {formatedtime}/>
-          </div>
-          <div className = "package-entry">
-            <label> Date:    </label>
-            <input type = "date" disabled = {true} value = {this.props.date}/>
-          </div>
-          <div className = "package-entry">
-            <label>Reference Number:    </label>
-            <input type = "text" disabled = {true} value = {this.props.reference}/>
-          </div>
+      <Container className = "package-container">
+          <Form.Group>
+              <Row>
+               <Col>
+                  <Form.Label className = "package-form-label" >Location:</Form.Label>
+                </Col>
+                <Col sm = {12} md = {9}  lg = {10} >
+                  <Form.Control className = "package-form-control" size = "sm" type = "text" readOnly value = {this.props.location_name}/>
+                </Col>
+              </Row>
+          </Form.Group>
+          <Form.Group>
+            <Row>
+                <Col>
+                  <Form.Label className = "package-form-label">Destination:</Form.Label>
+                </Col>
+                <Col sm = {12} md = {9}  lg = {10}>
+                <Form.Control className = "package-form-control" size = "sm" type = "text" readOnly value = {this.props.destination_name}/>
+              </Col>
+            </Row>
+          </Form.Group>
+          {
+            /*<Form.Group>
+              <Row>
+                <Col>
+                  <Form.Label> Distance:</Form.Label>
+                  </Col>
+                <Col sm = {12} md = {9}  lg = {10}>
+                  <Form.Control size = "sm" type = "text" readOnly value = {this.props.distance}/>
+                </Col>
+              </Row>
+            </Form.Group>*/
+          }
+          <Form.Group >
+            <Row>
+              <Col>
+                <Form.Label className = "package-form-label">Timeslot:</Form.Label>
+              </Col>
+              <Col sm = {12} md = {9}  lg = {10}>
+                <Form.Control className = "package-form-control" size = "sm" type = "time" readOnly value = {formatedtime}/>
+              </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group >
+            <Row>
+              <Col>
+                <Form.Label className = "package-form-label"> Date:</Form.Label>
+              </Col>
+              <Col sm = {12} md = {9}  lg = {10}>
+                <Form.Control className = "package-form-control" size = "sm" type = "date" readOnly value = {this.props.date}/>
+              </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group>
+            <Row>
+              <Col>
+                <Form.Label className = "package-form-label">Reference No:</Form.Label>
+              </Col>
+              <Col sm = {12} md = {9}  lg = {10}>
+                <Form.Control  className = "package-form-control" size = "sm" type = "text" readOnly value = {this.props.reference}/>
+              </Col>
+            </Row>
+          </Form.Group>
           <div className = "package-button-container">
             <Link to = {{
                 pathname:"/editPackage",
@@ -51,12 +89,16 @@ export default class Package extends React.Component{
                   }
                 }
               }}>
-              <button>Edit</button>
+              <Button 
+                className = "package-button"
+              >Edit</Button>
             </Link>
-            <button onClick = {()=>this.props.onDelete(this.props.id, this.props.index)}>Delete</button>
+            <Button 
+              onClick = {()=>this.props.onDelete(this.props.id, this.props.index)}
+              variant = "danger"
+            >Delete</Button>
           </div>
-        </div>
-      </>
+      </Container>
     );
   }
 }
